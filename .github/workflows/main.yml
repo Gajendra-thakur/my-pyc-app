@@ -1,0 +1,39 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Python (if using Python for example, adjust for your tech stack)
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # Install dependencies (example for Python, adjust for your tech stack)
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # Run tests (example for Python, adjust for your tech stack)
+      - name: Run tests
+        run: |
+          pytest
+
+      # Optionally deploy (e.g., using Azure, AWS, etc.)
+      - name: Deploy
+        run: |
+          echo "Deployment step"
