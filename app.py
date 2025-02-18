@@ -1,3 +1,3 @@
 import os
-print("Hello vipin singh")
+print("Hello prices 50 rupee iron sold ")
 print("current Dir is:",os.getcwd())
