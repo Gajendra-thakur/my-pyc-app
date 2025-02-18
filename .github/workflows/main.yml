@@ -29,9 +29,9 @@ jobs:
           #pip install -r requirements.txt
 
       # Build the static site (replace with your generator's build command, like mkdocs)
-      - name: Build static site
-        run: |
-          mkdocs build  # Change this if you're using another static generator
+      #- name: Build static site
+       # run: |
+          #mkdocs build  # Change this if you're using another static generator
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
