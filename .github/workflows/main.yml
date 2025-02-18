@@ -1,4 +1,4 @@
-name: Python Docker Build and Run
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
@@ -17,25 +17,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Set up Docker Buildx (to allow advanced features like multi-platform builds)
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      # Cache Docker layers for faster builds (optional)
-      - name: Cache Docker layers
-        uses: actions/cache@v2
+      # Set up Node.js (or use Python, Ruby, etc. depending on your tech stack)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
+          node-version: '14'
 
-      # Build the Docker image
-      - name: Build Docker image
+      # Install dependencies
+      - name: Install dependencies
         run: |
-          docker build -t my-python-app .
+          npm install
 
-      # Run the Docker container
-      - name: Run Docker container
+      # Build the project (if using a static site generator or build tool)
+      - name: Build the project
         run: |
-          docker run --rm my-python-app
+          npm run build
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build  # Adjust to the output folder from the build process
+          publish_branch: gh-pages  # Optional, can be changed to any branch you want to deploy to
