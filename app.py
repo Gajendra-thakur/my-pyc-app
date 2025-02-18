@@ -1,3 +1,3 @@
 import os
-print("This is my first image ddfgdfgf")
+print("Hello Gajendra")
 print("current Dir is:",os.getcwd())
