@@ -1,4 +1,4 @@
-name: Build & Deploy
+name: Python Docker Build and Run
 
 on:
   push:
@@ -13,27 +13,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
+      # Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Set up Python (if using Python for example, adjust for your tech stack)
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      # Set up Docker Buildx (to allow advanced features like multi-platform builds)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Cache Docker layers for faster builds (optional)
+      - name: Cache Docker layers
+        uses: actions/cache@v2
         with:
-          python-version: '3.8'
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
-      # Install dependencies (example for Python, adjust for your tech stack)
-     # - name: Install dependencies
-       # run: |
-          #pip install -r requirements.txt
-
-      # Run tests (example for Python, adjust for your tech stack)
-      - name: Run tests
+      # Build the Docker image
+      - name: Build Docker image
         run: |
-          pytest
+          docker build -t my-python-app .
 
-      # Optionally deploy (e.g., using Azure, AWS, etc.)
-      - name: Deploy
+      # Run the Docker container
+      - name: Run Docker container
         run: |
-          echo "Deployment step"
+          docker run --rm my-python-app
