@@ -1,3 +1,4 @@
+{{ config(materialized='table') }}
 WITh TRIPS as (
 
     select 
@@ -9,7 +10,7 @@ WITh TRIPS as (
     END_STATION_ID,
     MEMBER_CSUAL as MEMBER_CSUAL,
     TIMESTAMPDIFF(SECOND,TO_TIMESTAMP(STARTED_AT),TO_TIMESTAMP(ENDED_AT)) AS TRIP_DURATION_SECONDS
-    From {{ source('demo', 'bike') }}
+    From {{ ref('stg_bike') }}
     where RIDE_ID !='ride_id'
 
     

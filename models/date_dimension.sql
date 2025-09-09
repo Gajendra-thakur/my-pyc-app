@@ -1,3 +1,4 @@
+{{ config(materialized='table') }}
 WITH CTE AS (
 Select
 TO_TIMESTAMP(STARTED_AT),
@@ -10,7 +11,7 @@ MONTH(TO_TIMESTAMP(STARTED_AT)),
 {{day_type('STARTED_AT')}} as DAY_TYPE,
 {{get_seasion('STARTED_AT')}}  as STATION_OF_YEAR
 From 
-{{ source('demo', 'bike') }}
+{{ ref('stg_bike') }}
 where STARTED_AT!='started_at'
 
 )

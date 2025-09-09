@@ -1,3 +1,4 @@
+{{ config(materialized='table') }}
 WITH CTE AS (
 
     select 
@@ -6,7 +7,7 @@ WITH CTE AS (
      from {{ ref('trip_fact') }} t
     left join {{ ref('daily_weather') }} w
     on t.TRIP_DATE=w.daily_weather
-    order by TRIP_DATE,daily_weather desc
+    order by t.TRIP_DATE, w.daily_weather desc
     
 )
 
